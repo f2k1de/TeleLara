@@ -7,7 +7,7 @@ class telebot extends Passwd {
 	function __construct() {
 		$this->init();
 		$this->DB = new DBCore ('telegram', 'telegram');
-		//$this->getNews();
+		$this->getNews();
 		$this->sendNews();
 	}
 
@@ -65,7 +65,6 @@ class telebot extends Passwd {
 				// ToDo: Send
 			}
 		}
-
 	}
 
 	public function getNews() {
@@ -232,13 +231,13 @@ class telebot extends Passwd {
 		return $rqResult;
 	}
 
-		public function sendMsg($user, $msg) {
-			if($user != "" AND $msg != "") {
-				//$msg = urlencode($msg);
-				$systemcall = "curl --data chat_id=" . $user . " --data-urlencode " . '"' . "text=" . $msg . '" ' . "https://api.telegram.org/bot" . $this->token . "/sendMessage";
-				system($systemcall);
-			}
+	public function sendMsg($user, $msg) {
+		if($user != "" AND $msg != "") {
+			//$msg = urlencode($msg);
+			$systemcall = "curl --data chat_id=" . $user . " --data-urlencode " . '"' . "text=" . $msg . '" ' . "https://api.telegram.org/bot" . $this->token . "/sendMessage";
+			system($systemcall);
 		}
+	}
 }
 
 $tool = new telebot();
