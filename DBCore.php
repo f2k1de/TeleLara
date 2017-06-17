@@ -2,9 +2,10 @@
 include "DBPassword.php";
 class DBCore extends DBPassword {
 	protected $DBusername;
-	protected $DBDBpassword;
+	protected $DBpassword;
 	protected $database;
 	protected $DB;
+
 	// ToDo: Write documentation
 	function __construct($Accountdata, $Database) {
 		$a=0;
@@ -47,18 +48,25 @@ class DBCore extends DBPassword {
 			return $result;
 		}
 	}
-	public function modify ($sql, $sensitive = false) {
-		if (!$result = $this->DB->query($sql)) {
+	public function modify($sql, $sensitive = false) {
+		if(!$result = $this->DB->query($sql)) {
 			if ($sensitive === false)
 				die('There was an error running the command [' . $this->DB->error . ']');
 			else
 				echo ('\nThere was an error running the command [' . $this->DB->error . ']');
-		} else
+		} else {
 			return $result;
+		}
 	}
+
+	public function real_escape_string($string) {
+		return mysqli_real_escape_string($this->DB, $string);
+	}
+
 	public function close() {
 		mysqli_close($this->DB);
 	}
+
 	function __destruct() {
 		mysqli_close($this->DB);
 	}
