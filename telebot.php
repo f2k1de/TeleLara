@@ -39,7 +39,21 @@ class telebot extends Passwd {
 			print_r($newsdata);
 
 			for($i=0; count($newsdata) > $i; $i++) {
-				$messagetext = "You got a new notification on " . $newsdata[$i]['wiki'] . "\n";
+				if($newsdata[$i]['type'] == "edit-thank") {
+					$text = $newsdata[$i]['data']['agent']['name'] . " thanked you for your edit on " . $newsdata[$i]['data']['title']['full'] . ".\n";
+
+				} else if($newsdata[$i]['type'] == "edit-user-talk") {
+					$text = $newsdata[$i]['data']['agent']['name'] . " edited your talk page. See revision: https://" . $newsdata[$i]['wiki'] . "/wiki/Special:Diff/" . $newsdata[$i]['data']['revid'] . "\n";
+				} else if($newsdata[$i]['type'] == "mention") {
+					$text = $newsdata[$i]['data']['agent']['name'] . " mentioned you on " . $newsdata[$i]['data']['title']['full'] . ". See revision: https://" . $newsdata[$i]['wiki'] . "/wiki/Special:Diff/" . $newsdata[$i]['data']['revid'] . "\n";
+				} else if($newsdata[$i]['type'] == "emailuser") {
+					$text = $newsdata[$i]['data']['agent']['name'] . " sent you an email.\n";
+				} else if($newsdata[$i]['type'] == "page-linked") {
+					$text = $newsdata[$i]['data']['agent']['name'] . " created a link to " . $newsdata[$i]['data']['title']['full'] . ".\n";
+				}
+
+				$messagetext = $text;
+				//$messagetext = "You got a new notification on " . $newsdata[$i]['wiki'] . "\n";
 				$messagetext .= "Type of the action: " . $newsdata[$i]['type'] . "\n";
 				$messagetext .= "If you want to know more, please visit: https://" . $newsdata[$i]['wiki'] . "/wiki/Special:Notifications \n";
 
