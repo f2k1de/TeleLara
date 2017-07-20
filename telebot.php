@@ -41,7 +41,6 @@ class telebot extends Passwd {
 			for($i=0; count($newsdata) > $i; $i++) {
 				if($newsdata[$i]['type'] == "edit-thank") {
 					$text = $newsdata[$i]['data']['agent']['name'] . " thanked you for your edit on " . $newsdata[$i]['data']['title']['full'] . ".\n";
-
 				} else if($newsdata[$i]['type'] == "edit-user-talk") {
 					$text = $newsdata[$i]['data']['agent']['name'] . " edited your talk page. See revision: https://" . $newsdata[$i]['wiki'] . "/wiki/Special:Diff/" . $newsdata[$i]['data']['revid'] . "\n";
 				} else if($newsdata[$i]['type'] == "mention") {
@@ -50,6 +49,8 @@ class telebot extends Passwd {
 					$text = $newsdata[$i]['data']['agent']['name'] . " sent you an email.\n";
 				} else if($newsdata[$i]['type'] == "page-linked") {
 					$text = $newsdata[$i]['data']['agent']['name'] . " created a link to " . $newsdata[$i]['data']['title']['full'] . ".\n";
+				} else if($newsdata[$i]['type'] == "mention-success") {
+					$text = "Your mention on " . $newsdata[$i]['data']['title']['full'] . " was successful.\n";
 				}
 
 				$messagetext = $text;
