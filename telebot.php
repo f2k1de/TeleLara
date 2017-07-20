@@ -136,6 +136,11 @@ class telebot extends Passwd {
 			$id = $tree[$i]['id']; 
 			$type = $tree[$i]['type'];
 			$timestamp = $tree[$i]['timestamp']['unix'];
+			if(isset($tree[$i]['read'])) {
+				$read = true;
+			} else {
+				$read = false;
+			}
 			$message = json_encode($tree[$i]);
 			$message = $this->DB->real_escape_string($message);
 			$sql = "SELECT * FROM `messages` WHERE `accountid` =$userid AND `wiki` LIKE '$wiki' AND `messageid` = $id;";
@@ -146,7 +151,11 @@ class telebot extends Passwd {
 				$num = mysqli_num_rows($result);
 			}
 			if($num == 0) {
-				$sql = "INSERT INTO `messages` (`accountid`, `messageid`, `wiki`, `type`, `data`, `timestamp`, `sent`) VALUES ('" . $userid. "', '" . $id . "', '" . $wiki . "', '" . $type . "', '" . $message . "', " . $timestamp . ", 0)";
+				if($read == true) {
+					$sql = "INSERT INTO `messages` (`accountid`, `messageid`, `wiki`, `type`, `data`, `timestamp`, `sent`) VALUES ('" . $userid. "', '" . $id . "', '" . $wiki . "', '" . $type . "', '" . $message . "', " . $timestamp . ", 1)";
+				} else {
+					$sql = "INSERT INTO `messages` (`accountid`, `messageid`, `wiki`, `type`, `data`, `timestamp`, `sent`) VALUES ('" . $userid. "', '" . $id . "', '" . $wiki . "', '" . $type . "', '" . $message . "', " . $timestamp . ", 0)";
+				}
 				$this->DB->modify($sql);
 			}
 		}
