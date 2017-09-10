@@ -44,7 +44,7 @@ class telebot extends Passwd {
 				} else if($newsdata[$i]['type'] == "edit-user-talk") {
 					$text = $newsdata[$i]['data']['agent']['name'] . " edited your talk page. See revision: https://" . $newsdata[$i]['wiki'] . "/wiki/Special:Diff/" . $newsdata[$i]['data']['revid'] . "\n";
 				} else if($newsdata[$i]['type'] == "mention") {
-					$text = $newsdata[$i]['data']['agent']['name'] . " mentioned you on " . $newsdata[$i]['data']['title']['full'] . ". See revision: https://" . $newsdata[$i]['wiki'] . "/wiki/Special:Diff/" . $newsdata[$i]['data']['revid'] . "\n";
+					$text = $newsdata[$i]['data']['agent']['name'] . " mentioned you on " . $newsdata[$i]['data']['title']['full'] . ". See revision: https://" . $newsdata[$i]['wiki'] . "/wiki/Special:Diff/" . $newsdata[$i]['data']['revid'] . "?markasread=" . $newsdata[$i]['messageid'] . "\n";
 				} else if($newsdata[$i]['type'] == "emailuser") {
 					$text = $newsdata[$i]['data']['agent']['name'] . " sent you an email.\n";
 				} else if($newsdata[$i]['type'] == "page-linked") {
@@ -56,7 +56,7 @@ class telebot extends Passwd {
 				$messagetext = $text;
 				//$messagetext = "You got a new notification on " . $newsdata[$i]['wiki'] . "\n";
 				$messagetext .= "Type of the action: " . $newsdata[$i]['type'] . "\n";
-				$messagetext .= "If you want to know more, please visit: https://" . $newsdata[$i]['wiki'] . "/wiki/Special:Notifications \n";
+				$messagetext .= "If you want to know more, please visit: https://" . $newsdata[$i]['wiki'] . "/wiki/Special:Notifications?markasread=" . $newsdata[$i]['messageid'] . "\n";
 
 				$sql = "SELECT * FROM `users` WHERE `userid`= " . $newsdata[$i]['accountid'];
 				$result = $this->DB->query($sql);
